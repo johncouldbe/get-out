@@ -1,24 +1,28 @@
 const state = {
-  url:"https://api.foursquare.com/v2/venues/search",
-  near: "",
-  query: "donut"
+  optionSelected:false,
+  ajax: {
+    url:"https://api.foursquare.com/v2/venues/search",
+    near: "",
+    query: "donut"
+  }
 };
 
 let get4SqApi = (state, success) => {
    let data = {
-     near:state.near,
-     query:state.query,
+     near:state.ajax.near,
+     query:state.ajax.query,
      v:20170428,
      client_id:'YDX2K0BAAOAEQJ0MMPBPBP0ZPI3TAXN4OEZVBPF5KA2GAAMZ',
      client_secret: 'TTS0TSSO44RW0H5PAGRVMKUXJ52FNB5PCKC5VL2OBJDAYRKE'
    };
-   $.getJSON(state.url, data, success);
+   $.getJSON(state.ajax.url, data, success);
 };
 /*============ Display Functions ================= */
 function keepSizeRatio(){
   let sameHeight = $('.option').width();
+  let currentMargin = parseInt($('.option').css('marginTop')) * 2;
   $('.option').css({'height':sameHeight+'px'});
-  $('.option-row').css({'height':sameHeight+ 5 + 'px'});
+  $('.option-row').css({'height':sameHeight+ currentMargin+ 'px'});
 }
 keepSizeRatio();
 
@@ -32,39 +36,30 @@ let displayVenues = data => {
 
 $('.js-form').submit(e => {
   e.preventDefault();
-  state.near = $('.js-input').val();
+  state.ajax.near = $('.js-input').val();
   get4SqApi(state, displayVenues);
 });
 
 $('.option').click(function(e){
-  let margin = $(this).css('marginLeft');
-  //Lower opacity of surrounding options
-  $('.option').not(this).each(function(e){
-    $(this).animate({
-      opacity: '.5'
+  if(state.optionSelected === false){
+    state.optionSelected = true;
+    //Lower opacity of surrounding options
+    $('.option').not(this).not($(this).siblings()).each(function(e){
+      $(this).addClass('not-selected-option');
     });
-  });
-  //remove sibling option from DOM
-  $(this).siblings().animate({
-    opacity: '.0',
-    display: 'none'
-  }, 200);
-  // increase size of option to reveal venues
-  $(this).delay(1000).animate({
-    width: $(this).parent().width() - (parseInt(margin) * 2),
-    height: '100%'
-  });
-  if($(window).width() > 750){
-    $(this).closest('.option-container').find('.option-row').delay(1000).animate({
-      height: '70vh'
-    });
-    $(this).closest('.option-container').delay(1000).animate({
-      height: '70vh'
-    });
+    //remove selected's sibling option from DOM
+    $(this).siblings().addClass('selected-option-sibling');
 
+    // increase size of option to reveal venues
+    $(this).closest('.option-row, .option-container').addClass('selected-option');
+    $(this).parent('.option-row').siblings().addClass('selected-option-row-sibling');
   } else {
-    $(this).parent().delay(1000).animate({
-      height: '80vh'
+    state.optionSelected = false;
+    $.css("background-color", "");
+
+    $('.option').not(this).not($(this).siblings()).each(function(e){
+      $(this).css("opacity", "");
     });
   }
+
 });

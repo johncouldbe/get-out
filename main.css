@@ -8,6 +8,10 @@ body, h1, h2, div {
   padding: 0;
 }
 
+body {
+  background-color: #aaa;
+}
+
 .text-center {
   text-align: center;
 }
@@ -28,21 +32,18 @@ body, h1, h2, div {
 }
 
 .option-row {
-  width: 49vw;
+  width: 49%;
   position: relative;
   display: inline-block;
-  background-color: grey;
   font-size: 16px;
 }
 
 .option {
   width: 23.2vw;
-  margin: .6vh .6vw;
+  margin: 1vh .6vw;
   background-color: #00ffff;
   display: inline-block;
   position: absolute;
-  cursor: pointer;
-  top:0;
 }
 
 .option-left {
@@ -61,8 +62,32 @@ body, h1, h2, div {
   top: 5px;
   color: #619c9c;
   font-size: 250%;
+  cursor: pointer;
+}
+/* Javascript Classes */
+.selected-option{
+  height: 70vh !important;
+  transition: .2s;
 }
 
+.selected-option > .option{
+  width: 47.8vw !important;
+  height: 68vh !important;
+  transition: .2s;
+}
+
+.not-selected-option {
+  opacity: .5;
+  transition: .2s
+}
+
+.selected-option-sibling {
+  display: none;
+  height: 70vh;
+  transition: .2s
+}
+
+/* ================== */
 @media screen and (max-width:750px){
   .option-row{
     width: 100%;
@@ -70,5 +95,29 @@ body, h1, h2, div {
   .option {
     width: 49vw;
     margin: .3vh .3vw;
+  }
+
+  /* Javascript Classes */
+  .selected-option{
+    height: 80vh !important;
+    transition: .2s;
+  }
+
+  .selected-option > .option{
+    width: 98.8vw !important;
+    height: 79vh !important;
+    transition: .2s;
+  }
+
+  .selected-option-row-sibling {
+    height: 100%;
+  }
+  /* ================== */
+}
+
+@media screen and (min-width:750px){
+  .selected-option-row-sibling {
+    height: 70vh !important;
+    transition: .2s;
   }
 }
