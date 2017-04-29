@@ -1,5 +1,74 @@
 * {
   box-sizing: border-box;
-  text-align: center;
   font-family: 'Roboto', sans-serif;
+}
+
+body, h1, h2, div {
+  margin: 0;
+  padding: 0;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.form-section {
+  margin-bottom: 5px;
+}
+
+.options {
+  height: 100%;
+  margin: 0 auto;
+  position: relative;
+  text-align: center;
+  font-size: 0;
+}
+.option-container {
+  width: 100%;
+}
+
+.option-row {
+  width: 49vw;
+  position: relative;
+  display: inline-block;
+  background-color: grey;
+  font-size: 16px;
+}
+
+.option {
+  width: 23.2vw;
+  margin: .6vh .6vw;
+  background-color: #00ffff;
+  display: inline-block;
+  position: absolute;
+  cursor: pointer;
+  top:0;
+}
+
+.option-left {
+  left:0;
+}
+
+.option-right {
+  right:0;
+}
+
+.option-name {
+  position: absolute;
+  padding: 0;
+  margin: 0;
+  right: 10px;
+  top: 5px;
+  color: #619c9c;
+  font-size: 250%;
+}
+
+@media screen and (max-width:750px){
+  .option-row{
+    width: 100%;
+  }
+  .option {
+    width: 49vw;
+    margin: .3vh .3vw;
+  }
 }
