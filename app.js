@@ -18,17 +18,6 @@ let get4SqApi = (state, success) => {
    $.getJSON(state.ajax.url, data, success);
 };
 /*============ Display Functions ================= */
-function keepSizeRatio(){
-  let sameHeight = $('.option').width();
-  let currentMargin = parseInt($('.option').css('marginTop')) * 2;
-  $('.option').css({'height':sameHeight+'px'});
-  $('.option-row').css({'height':sameHeight+ currentMargin+ 'px'});
-}
-keepSizeRatio();
-
-$(window).resize(function() {
-  keepSizeRatio();
-});
 
 let displayVenues = data => {
   console.log(data);
@@ -48,18 +37,32 @@ $('.option').click(function(e){
       $(this).addClass('not-selected-option');
     });
     //remove selected's sibling option from DOM
-    $(this).siblings().addClass('selected-option-sibling');
+    $(this).siblings().addClass('hidden');
 
     // increase size of option to reveal venues
     $(this).closest('.option-row, .option-container').addClass('selected-option');
     $(this).parent('.option-row').siblings().addClass('selected-option-row-sibling');
-  } else {
-    state.optionSelected = false;
-    $.css("background-color", "");
+    //Show venues
 
-    $('.option').not(this).not($(this).siblings()).each(function(e){
-      $(this).css("opacity", "");
-    });
+    $(this).find('.venues').removeClass('hidden');
   }
+});
 
+$('.option-name').click(function(e){
+  e.stopPropagation();
+if(state.optionSelected === true){
+  state.optionSelected = false;
+  //Raise opacity of surrounding options
+  $('.option').not(this).not($(this).siblings()).each(function(e){
+    $(this).removeClass('not-selected-option');
+  });
+  //add selected's sibling option from DOM
+  $(this).closest('.option').siblings().removeClass('hidden');
+
+  // decrease size of option to hide venues
+  $(this).closest('.option-row, .option-container').removeClass('selected-option');
+  $(this).closest('.option-row').siblings().removeClass('selected-option-row-sibling');
+  //Hide venues
+  $(this).siblings('.venues').addClass('hidden');
+  }
 });

@@ -32,18 +32,23 @@ body {
 }
 
 .option-row {
-  width: 49%;
+  width: 49vw;
+  height: 25.2vw;
   position: relative;
   display: inline-block;
   font-size: 16px;
+  transition: .2s;
 }
 
 .option {
   width: 23.2vw;
+  height:23.2vw;
   margin: 1vh .6vw;
   background-color: #00ffff;
   display: inline-block;
   position: absolute;
+  cursor: pointer;
+  transition: .2s;
 }
 
 .option-left {
@@ -61,19 +66,63 @@ body {
   right: 10px;
   top: 5px;
   color: #619c9c;
-  font-size: 250%;
-  cursor: pointer;
+  font-size: 150%;
+  cursor: default;
+  transition: 1s;
+}
+
+.venues {
+  position: absolute;
+  text-align: left;
+  top: 10vh;
+  left: 0;
+  width: inherit;
+  background-color: #fff;
+  height:68vh;
+  overflow-y: scroll;
+  padding: .3vw;
+}
+
+.venue {
+  width: 100%;
+  padding: 1vw;
+  margin: .7vw 0;
+  height: 30.2vh;
+  background-color: #fff;
+  -webkit-box-shadow: 4px 9px 59px -17px rgba(0,0,0,0.75);
+-moz-box-shadow: 4px 9px 59px -17px rgba(0,0,0,0.75);
+box-shadow: 4px 9px 59px -17px rgba(0,0,0,0.75);
+}
+
+.venue-img {
+  width:15.1vh;
+  height: 15.1vh;
+}
+
+.title-address {
+  position: absolute;
+  top: 3vh;
+  left:18.1vh;
+  max-width: 31vw;
+  background-color: yellow;
 }
 /* Javascript Classes */
 .selected-option{
-  height: 70vh !important;
+  height: 80vh !important;
   transition: .2s;
 }
 
 .selected-option > .option{
   width: 47.8vw !important;
-  height: 68vh !important;
+  height: 78vh !important;
+  cursor: default;
   transition: .2s;
+}
+
+.selected-option > .option .option-name {
+  cursor:pointer;
+  color: purple;
+  transition: 1s;
 }
 
 .not-selected-option {
@@ -81,20 +130,33 @@ body {
   transition: .2s
 }
 
-.selected-option-sibling {
+.hidden {
   display: none;
-  height: 70vh;
   transition: .2s
 }
 
 /* ================== */
-@media screen and (max-width:750px){
+
+/* Mobile Friendly */
+@media screen and (max-width:1015px){
   .option-row{
     width: 100%;
+    height: 51vw;
   }
   .option {
     width: 49vw;
+    height: 49vw;
     margin: .3vh .3vw;
+  }
+
+  .venues {
+    height: 68.9vh;
+  }
+
+  .title-address {
+    top: 2vh;
+    left:17.1vh;
+    max-width: 51vw;
   }
 
   /* Javascript Classes */
@@ -108,16 +170,46 @@ body {
     height: 79vh !important;
     transition: .2s;
   }
-
-  .selected-option-row-sibling {
-    height: 100%;
-  }
   /* ================== */
 }
 
 @media screen and (min-width:750px){
   .selected-option-row-sibling {
-    height: 70vh !important;
+    height: 58vh !important;
     transition: .2s;
+  }
+}
+/* Ipad Pro and a little New MacBook friendlying */
+@media screen and (min-height: 800px){
+  .venue {
+    height: 30.2vw;
+
+  }
+
+  .venue-img {
+    width:13.1vw;
+    height: 13.1vw;
+  }
+
+  .title-address {
+    top: 2vh;
+    left:16.1vw;
+    max-width: 25vw;
+  }
+}
+
+/* High res laptop Specific */
+@media screen and (min-width: 1800px){
+  h1, h2 {
+    font-size: 300% !important;
+  }
+
+  p {
+    font-size: 200% !important;
+  }
+
+  .title-address {
+    top: 3vh;
+    max-width: 45vh;
   }
 }
