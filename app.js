@@ -39,8 +39,8 @@ let displayVenues = (data, venueContainer) => {
   let venue = '';
   data.response.groups[0].items.forEach(function(obj){
     //Adds a location address key value pair in our state object to use later for when we need to pull up the map
-    state.addresses[obj.venue.name] = obj.venue.location.formattedAddress[0] +
-    ' ' + obj.venue.location.formattedAddress[1].split(' ').join('+').replace(/[{()}]/g, '');
+    state.addresses[obj.venue.name] = (obj.venue.location.formattedAddress[0] +
+    ' ' + obj.venue.location.formattedAddress[1]).replace(/&/g, "").replace(/ *\([^)]*\) */g, " ").split(' ').join('+');
     //creates the displayed venues
     venue += `
     <div class="venue">
@@ -73,6 +73,7 @@ let displayVenues = (data, venueContainer) => {
 };
 //Display google maps
 function displayMap(query, map){
+  console.log(state.addresses[query]);
   let newMap = `
   <div class="close-map">
     <h1>Close</h1>
