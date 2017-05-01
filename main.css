@@ -21,6 +21,10 @@ header {
   text-align: center;
 }
 
+.input {
+  font-size: 16px;
+}
+
 .options {
   height: 100%;
   margin: 0 auto;
@@ -35,7 +39,7 @@ header {
 
 .option-row {
   width: 49vw;
-  height: 25.2vw;
+  height: 24.7vw;
   position: relative;
   display: inline-block;
   font-size: 16px;
@@ -81,8 +85,9 @@ header {
   width: inherit;
   background-color: #fff;
   height:68vh;
-  overflow-y: scroll;
   padding: .3vw;
+  overflow-y: scroll; /* has to be scroll, not auto */
+  -webkit-overflow-scrolling: touch;
 }
 
 .venue {
