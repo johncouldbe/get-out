@@ -18,45 +18,43 @@
       <button type="submit">Search</button>
     </form>
   </section>
+  <section class="g-map">
+    <div class="close-map">
+      <h1>Close</h1>
+    </div>
+    <iframe
+    frameborder="0" style="border:0"
+    src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCHlf61q8MgJfM8kLez1L0X7VvoyIiRwXg&q=3101+Cobb+Pkwy+SE=Ste+20+at+Cumberland+Blvd+Atlanta,GA+30339" allowfullscreen>
+  </iframe>
+  </section>
+
     <section class="options">
 
       <div class="option-container">
         <div class="option-row">
           <div class="option option-left">
             <h1 class="option-name">Hike</h1>
-            <div class="venues hidden">
+            <div class="venues hidden" id="hike">
 
             </div>
           </div>
-          <div class="option option-right">
+          <div class="option option-right" >
             <h1 class="option-name">Movie</h1>
-            <div class="venues">
-              <div class="venue">
-                <img src="profile-pic.jpg" class="venue-img"/>
-                <div class="title-address">
-                  <h2>Pete's Emporium Explorium</h2>
-                  <p>7463 Fakery Ln. Minneonapolis, CA 74102</p>
-                </div>
-              </div>
-              <div class="venue">
-                <img src="profile-pic.jpg" class="venue-img"/>
-              </div>
-              <div class="venue">
-                <img src="profile-pic.jpg" class="venue-img"/>
-              </div>
+            <div class="venues hidden" id="movie">
+
             </div>
           </div>
         </div>
         <div class="option-row">
           <div class="option option-left">
             <h1 class="option-name">Bike</h1>
-            <div class="venues hidden">
+            <div class="venues hidden" id="bike">
 
             </div>
           </div>
           <div class="option option-right">
             <h1 class="option-name">Dog Park</h1>
-            <div class="venues hidden">
+            <div class="venues hidden" id="dog-park">
 
             </div>
           </div>
@@ -67,13 +65,13 @@
         <div class="option-row">
           <div class="option option-left">
             <h1 class="option-name">Coffee</h1>
-            <div class="venues hidden">
+            <div class="venues hidden" id="coffee">
 
             </div>
           </div>
           <div class="option option-right">
             <h1 class="option-name">Skate</h1>
-            <div class="venues hidden">
+            <div class="venues hidden" id="skate">
 
             </div>
           </div>
@@ -81,13 +79,13 @@
         <div class="option-row">
           <div class="option option-left">
             <h1 class="option-name">Shop</h1>
-            <div class="venues hidden">
+            <div class="venues hidden" id="shop">
 
             </div>
           </div>
           <div class="option option-right">
             <h1 class="option-name">Swim</h1>
-            <div class="venues hidden">
+            <div class="venues hidden" id="swim">
 
             </div>
           </div>
@@ -98,7 +96,7 @@
         <div class="option-row">
           <div class="option option-left">
             <h1 class="option-name">Run</h1>
-            <div class="venues hidden">
+            <div class="venues hidden" id="run">
 
             </div>
           </div>
