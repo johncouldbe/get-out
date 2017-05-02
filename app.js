@@ -2,6 +2,7 @@ const state = {
   optionSelected:false,
   id: "",
   addresses: {},
+  option: {},
   ajax: {
     url:"https://api.foursquare.com/v2/venues/explore",
     near: "",
@@ -9,8 +10,13 @@ const state = {
   }
 };
 
-function logLocation(){
+function logItemsToState(){
+
   state.ajax.near = $('.js-input').val();
+
+  $('.option-name').each(function(option){
+    state.option[$(this).text()] = false;
+  });
 }
 
 let get4SqApi = (state, success) => {
@@ -102,7 +108,6 @@ let displayVenues = (data, venueContainer) => {
 };
 //Display google maps
 function displayMap(query, map){
-  console.log(state.addresses[query]);
   let newMap = `
   <div class="close-map">
     <h1>Close</h1>
@@ -118,20 +123,27 @@ map.html(newMap);
 $('.js-form').submit(e => {
   e.preventDefault();
   initiatedDisplay();
-  logLocation();
+  logItemsToState();
 });
 
+//When user picks an option
 $('.option').click(function(event){
   var e = event.currentTarget;
+  var currentOption = $(this).find('.option-name').text();
+
   if(state.optionSelected === false){
     state.optionSelected = true;
     state.id = $(this).find('.venues').attr('id');
     state.ajax.query = $(this).find('.venues').attr('id').replace(/-/g, ' ');
-    get4SqApi(state, displayVenues);
+
+    if(state.option[currentOption] === false){
+      get4SqApi(state, displayVenues);
+      state.option[currentOption] = true;
+    }
     selectedAnimation(e);
   }
 });
-
+//When user closes an option
 $('.option-name').click(function(event){
   event.stopPropagation();
   var e = event.currentTarget;
@@ -141,13 +153,13 @@ $('.option-name').click(function(event){
     deSelectedAnimation(e);
   }
 });
-
-$('.g-map').on('click', '.close-map', function(){
-  $('.g-map').fadeOut();
-});
-
+//Display google map
 $('.venues').on('click', '.map-icon', function(e){
   var query = $(this).attr('id');
   displayMap(query, $('.g-map'));
   $('.g-map').fadeIn();
+});
+//Hide google map
+$('.g-map').on('click', '.close-map', function(){
+  $('.g-map').fadeOut();
 });
