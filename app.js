@@ -3,21 +3,31 @@ const state = {
   id: "",
   addresses: {},
   option: {},
+  venuePhotos:[],
   ajax: {
     url:"https://api.foursquare.com/v2/venues/explore",
+    photosURL:"",
     near: "",
     query: ""
   }
 };
 
 function logItemsToState(){
-
   state.ajax.near = $('.js-input').val();
 
   $('.option-name').each(function(option){
-    state.option[$(this).text()] = false;
+    state.option[$(this).text()] = {isTrue:false};
   });
 }
+
+let get4SqPhoto = (state, success) => {
+   let data = {
+     v:20170428,
+     client_id:'YDX2K0BAAOAEQJ0MMPBPBP0ZPI3TAXN4OEZVBPF5KA2GAAMZ',
+     client_secret: 'TTS0TSSO44RW0H5PAGRVMKUXJ52FNB5PCKC5VL2OBJDAYRKE'
+   };
+   $.getJSON(state.ajax.photosURL,data ,success);
+};
 
 let get4SqApi = (state, success) => {
    let data = {
@@ -29,7 +39,29 @@ let get4SqApi = (state, success) => {
    };
    $.getJSON(state.ajax.url, data, success);
 };
+
+function createPhotoURLS(data){
+  if(data.response.photos.count > 0){
+    state.venuePhotos.push(`${data.response.photos.items[0].prefix}300x300${data.response.photos.items[0].suffix}`);
+  } else{
+    state.venuePhotos.push('assets/no-pic.png');
+  }
+  /**/
+}
+
+function getPhotoURLS(data){
+  data.response.groups[0].items.forEach(function(obj){
+    //Retrieve photo data
+  state.ajax.photosURL = `https:api.foursquare.com/v2/venues/${obj.venue.id}/photos`;
+  get4SqPhoto(state, createPhotoURLS);
+
+    //Adds a location address key value pair in our state object to use later for when we need to pull up the map
+  state.addresses[obj.venue.name] = (obj.venue.location.formattedAddress[0] +
+    ' ' + obj.venue.location.formattedAddress[1]).replace(/&/g, "").replace(/ *\([^)]*\) */g, " ").split(' ').join('+');
+  });
+}
 /*============ Display Functions ================= */
+
 //Initial animation when user enters their location search
 function initiatedDisplay(){
   $('header, .form-section').addClass('position-top');
@@ -40,8 +72,8 @@ function initiatedDisplay(){
 //Animation of selected and venue showing
 function selectedAnimation(e){
   //Lower opacity of surrounding options
-  $('.option').not($(e)).not($(e).siblings()).each(function(e){
-    $(e).addClass('not-selected-option');
+  $('.option').not($(e)).not($(this).siblings()).each(function(e){
+    $(this).addClass('not-selected-option');
   });
   //remove selected's sibling option from DOM
   $(e).siblings().addClass('hidden');
@@ -55,8 +87,8 @@ function selectedAnimation(e){
 //Animation of De-Selected and venue hiding
 function deSelectedAnimation(e){
   //Raise opacity of surrounding options
-  $('.option').not($(e)).not($(e).siblings()).each(function(e){
-    $(e).removeClass('not-selected-option');
+  $('.option').not($(e)).not($(this).siblings()).each(function(e){
+    $(this).removeClass('not-selected-option');
   });
   //add selected's sibling option from DOM
   $(e).closest('.option').siblings().removeClass('hidden');
@@ -70,42 +102,43 @@ function deSelectedAnimation(e){
 
 //Displays the venues in the dropdown
 let displayVenues = (data, venueContainer) => {
-  console.log(data);
+  var i = 0;
   let venue = '';
-  data.response.groups[0].items.forEach(function(obj){
-    //Adds a location address key value pair in our state object to use later for when we need to pull up the map
-    state.addresses[obj.venue.name] = (obj.venue.location.formattedAddress[0] +
-    ' ' + obj.venue.location.formattedAddress[1]).replace(/&/g, "").replace(/ *\([^)]*\) */g, " ").split(' ').join('+');
-    //creates the displayed venues
-    venue += `
-    <div class="venue">
-      <div class="title-address">
+  getPhotoURLS(data);
+  setTimeout(function(){
+    data.response.groups[0].items.forEach(function(obj){
+      //creates the displayed venues
+      venue += `
+      <div class="venue">
+        <img src="${state.venuePhotos[i]}" class="venue-img"/>
+        <div class="title-address">
         <h2 class="venue-name">${obj.venue.name}</h2>
         <p>${obj.venue.location.formattedAddress[0]} ${obj.venue.location.formattedAddress[1]}</p>
-      </div>`;
-      //Make sure theres a user rating before displaying
-      if(obj.venue.rating > 0){
-        venue +=`
-        <div class="rating" style="background-color:#${obj.venue.ratingColor}">
-          <p>${obj.venue.rating}</p>
         </div>`;
-      } else {
-        venue +=`
-        <div class="rating" style="background-color:tomato">
-          <p>N/A</p>
-        </div>`;
-      }
 
-      venue +=
-      `<img src="map-marker-icon.png" class="map-icon" id="${obj.venue.name}"/>
-      <img src="arrow.svg" class="share-icon"/>
-    </div>`;
-  });
-  $('#' + state.id).html(venue);
-   /*`
-      <img src="profile-pic.jpg" class="venue-img"/>
-` */
+        //Make sure theres a user rating before displaying
+        if(obj.venue.rating > 0){
+          venue +=`
+          <div class="rating" style="background-color:#${obj.venue.ratingColor}">
+          <p>${obj.venue.rating}</p>
+          </div>`;
+        } else {
+          venue +=`
+          <div class="rating" style="background-color:tomato">
+          <p>N/A</p>
+          </div>`;
+        }
+        venue +=
+        `<img src="map-marker-icon.png" class="map-icon" id="${obj.venue.name}"/>
+        </div>`;
+        i++;
+      });
+      state.venuePhotos = [];
+      $('#' + state.id).html(venue);
+
+    }, 2000);
 };
+
 //Display google maps
 function displayMap(query, map){
   let newMap = `
@@ -124,6 +157,7 @@ $('.js-form').submit(e => {
   e.preventDefault();
   initiatedDisplay();
   logItemsToState();
+  $('footer').fadeOut();
 });
 
 //When user picks an option
@@ -136,7 +170,7 @@ $('.option').click(function(event){
     state.id = $(this).find('.venues').attr('id');
     state.ajax.query = $(this).find('.venues').attr('id').replace(/-/g, ' ');
 
-    if(state.option[currentOption] === false){
+    if(state.option[currentOption].isTrue === false){
       get4SqApi(state, displayVenues);
       state.option[currentOption] = true;
     }

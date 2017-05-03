@@ -3,18 +3,46 @@
   font-family: 'Roboto', sans-serif;
 }
 
+
 body, h1, h2, p, div {
   margin: 0;
   padding: 0;
 }
 
+.bg{
+  width: 100%;
+  min-height: 100vh;
+  position: fixed;
+  top: 0;
+  z-index: -3;
+  background-image: url(assets/mountain-bg.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
 header, .form-section {
   position: relative;
   top: 45vh;
+  color: #fff;
 }
 
 header {
-  color: purple;
+  text-shadow: 0px 0px 12px rgba(125, 134, 135, 1);
+}
+
+footer {
+  background-color: rgba(43, 65, 88, 0.7);
+  color: #fff;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  font-weight: 100;
+}
+
+footer a {
+  color: #0DFFA9;
+  text-decoration: none;
 }
 
 .text-center {
@@ -23,6 +51,36 @@ header {
 
 .input {
   font-size: 16px;
+  outline: none;
+  background-color: rgba(43, 65, 88, 0.7);
+  border: none;
+  border-bottom: 2px #fff;
+  padding: 5px;
+  height: 40px;
+  color: #fff;
+}
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #fff;
+}
+::-moz-placeholder { /* Firefox 19+ */
+  color: #fff;
+}
+:-ms-input-placeholder { /* IE 10+ */
+  color: #fff;
+}
+:-moz-placeholder { /* Firefox 18- */
+  color: #fff;
+}
+
+button {
+  height: 40px;
+  width: 80px;
+  color: #0C83E8;
+  background-color: #0DFFA9;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
 }
 
 .options {
@@ -49,8 +107,9 @@ header {
 .option {
   width: 23.2vw;
   height:23.2vw;
+  border-radius: 4px;
   margin: 1vh .6vw;
-  background-color: #01f3f3;
+  background-color: #0DFFA9;
   display: inline-block;
   position: absolute;
   cursor: pointer;
@@ -71,10 +130,20 @@ header {
   margin: 0;
   right: 10px;
   top: 5px;
-  color: #fff;
+  color: #0C83E8;
   font-size: 150%;
   cursor: default;
   transition: .5s;
+}
+
+.option-img {
+  position: absolute;
+  max-height: 50%;
+  width: auto;
+  max-width: 95%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .venues {
@@ -105,6 +174,9 @@ header {
 .venue-img {
   width:15.1vh;
   height: 15.1vh;
+  position: absolute;
+  top:5%;
+  left:2%;
 }
 
 .title-address {
@@ -199,7 +271,7 @@ header {
 
 .selected-option > .option .option-name {
   cursor:pointer;
-  color: purple;
+  color: #0D50FF;
   transition: 1s;
 }
 
@@ -213,10 +285,80 @@ header {
   transition: .2s
 }
 
+/* -------------- Clock -------------- */
+
+.clock{
+	border-radius: 60px;
+	border: 3px solid #0C83E8;
+	height: 80px;
+	width: 80px;
+	position: relative;
+
+	top: 28%;
+	top: -webkit-calc(50% - 43px);
+	top: calc(50% - 43px);
+	left: 35%;
+	left: -webkit-calc(50% - 43px);
+	left: calc(50% - 43px);
+}
+.clock:after{
+	content: "";
+	position: absolute;
+	background-color: #0C83E8;
+	top:2px;
+	left: 48%;
+	height: 38px;
+	width: 4px;
+	border-radius: 5px;
+	-webkit-transform-origin: 50% 97%;
+			transform-origin: 50% 97%;
+	-webkit-animation: grdAiguille 2s linear infinite;
+			animation: grdAiguille 2s linear infinite;
+}
+
+@-webkit-keyframes grdAiguille{
+    0%{-webkit-transform:rotate(0deg);}
+    100%{-webkit-transform:rotate(360deg);}
+}
+
+@keyframes grdAiguille{
+    0%{transform:rotate(0deg);}
+    100%{transform:rotate(360deg);}
+}
+
+.clock:before{
+	content: "";
+	position: absolute;
+	background-color: #0C83E8;
+	top:6px;
+	left: 48%;
+	height: 35px;
+	width: 4px;
+	border-radius: 5px;
+	-webkit-transform-origin: 50% 94%;
+			transform-origin: 50% 94%;
+	-webkit-animation: ptAiguille 12s linear infinite;
+			animation: ptAiguille 12s linear infinite;
+}
+
+@-webkit-keyframes ptAiguille{
+    0%{-webkit-transform:rotate(0deg);}
+    100%{-webkit-transform:rotate(360deg);}
+}
+
+@keyframes ptAiguille{
+    0%{transform:rotate(0deg);}
+    100%{transform:rotate(360deg);}
+}
+
+
 /* ================== */
 
 /* Mobile Friendly */
 @media screen and (max-width:1015px){
+  body {
+    background-position: center center;
+  }
 
   .option-row{
     width: 100%;
