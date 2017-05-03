@@ -129,7 +129,7 @@ let displayVenues = (data, venueContainer) => {
           </div>`;
         }
         venue +=
-        `<img src="map-marker-icon.png" class="map-icon" id="${obj.venue.name}"/>
+        `<img src="assets/map-marker-icon.png" class="map-icon" id="${obj.venue.name}"/>
         </div>`;
         i++;
       });
