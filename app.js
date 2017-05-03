@@ -42,7 +42,8 @@ let get4SqApi = (state, success) => {
 
 function createPhotoURLS(data){
   if(data.response.photos.count > 0){
-    state.venuePhotos.push(`${data.response.photos.items[0].prefix}300x300${data.response.photos.items[0].suffix}`);
+    state.venuePhotos.push(`https://igx.4sqi.net/img/general/300x300${data.response.photos.items[0].suffix}`);
+    console.log(state.venuePhotos);
   } else{
     state.venuePhotos.push('assets/no-pic.png');
   }
