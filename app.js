@@ -43,7 +43,6 @@ let get4SqApi = (state, success) => {
 function createPhotoURLS(data){
   if(data.response.photos.count > 0){
     state.venuePhotos.push(`${data.response.photos.items[0].prefix}300x300${data.response.photos.items[0].suffix}`);
-    console.log(state.venuePhotos);
   } else{
     state.venuePhotos.push('assets/no-pic.png');
   }
@@ -113,7 +112,15 @@ let displayVenues = (data, venueContainer) => {
       <div class="venue">
         <img src="${state.venuePhotos[i]}" class="venue-img"/>
         <div class="title-address">
-        <h2 class="venue-name">${obj.venue.name}</h2>
+        <h2 class="venue-name">`;
+
+        if(obj.venue.url != undefined){
+          venue += `<a href="${obj.venue.url}" target="_blank">${obj.venue.name}</a>`;
+        } else{
+          venue += `${obj.venue.name}`;
+        }
+
+        venue += `</h2>
         <p>${obj.venue.location.formattedAddress[0]} ${obj.venue.location.formattedAddress[1]}</p>
         </div>`;
 

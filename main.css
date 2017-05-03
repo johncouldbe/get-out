@@ -186,6 +186,11 @@ button {
   max-width: 31vw;
 }
 
+.title-address a {
+  text-decoration: none;
+  color: #0D50FF;
+}
+
 .map-icon {
   width: 7%;
   height: auto;
