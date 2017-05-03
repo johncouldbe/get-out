@@ -42,7 +42,7 @@ let get4SqApi = (state, success) => {
 
 function createPhotoURLS(data){
   if(data.response.photos.count > 0){
-    state.venuePhotos.push(`https://igx.4sqi.net/img/general/300x300${data.response.photos.items[0].suffix}`);
+    state.venuePhotos.push(`${data.response.photos.items[0].prefix}300x300${data.response.photos.items[0].suffix}`);
     console.log(state.venuePhotos);
   } else{
     state.venuePhotos.push('assets/no-pic.png');
@@ -53,7 +53,7 @@ function createPhotoURLS(data){
 function getPhotoURLS(data){
   data.response.groups[0].items.forEach(function(obj){
     //Retrieve photo data
-  state.ajax.photosURL = `https:api.foursquare.com/v2/venues/${obj.venue.id}/photos`;
+  state.ajax.photosURL = `https://api.foursquare.com/v2/venues/${obj.venue.id}/photos`;
   get4SqPhoto(state, createPhotoURLS);
 
     //Adds a location address key value pair in our state object to use later for when we need to pull up the map
