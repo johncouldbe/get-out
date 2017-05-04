@@ -29,6 +29,7 @@ header, .form-section {
 
 header {
   text-shadow: 0px 0px 12px rgba(125, 134, 135, 1);
+  padding: 20px 0;
 }
 
 footer {
@@ -58,6 +59,7 @@ footer a {
   padding: 5px;
   height: 40px;
   color: #fff;
+  margin-bottom: 10px;
 }
 
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
