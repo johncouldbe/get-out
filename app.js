@@ -102,6 +102,8 @@ $(function(){
     $('header, .form-section').addClass('position-top');
     $('.form-section').addClass('hidden');
     $('.options').delay(1000).fadeIn(1000);
+    $('header p').fadeOut();
+    $('footer').fadeOut();
   }
 
   //Animation of selected and venue showing
@@ -203,9 +205,6 @@ $(function(){
     e.preventDefault();
     logItemsToState();
     checkValidLocation(state, initiatedDisplay);
-
-    $('header p').fadeOut();
-    $('footer').fadeOut();
   });
 
   //When user picks an option
