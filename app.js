@@ -34,14 +34,6 @@ $(function(){
   };
 
   let checkValidLocation = (state, success) => {
-     /*let data = {
-       near:state.ajax.near,
-       query:state.ajax.query,
-       v:20170428,
-       client_id:'YDX2K0BAAOAEQJ0MMPBPBP0ZPI3TAXN4OEZVBPF5KA2GAAMZ',
-       client_secret: 'TTS0TSSO44RW0H5PAGRVMKUXJ52FNB5PCKC5VL2OBJDAYRKE'
-     };
-     $.getJSON(state.ajax.url, data, success); */
 
      $.ajax({
        method:"GET",
@@ -99,11 +91,12 @@ $(function(){
 
   //Initial animation when user enters their location search
   function initiatedDisplay(){
-    $('header, .form-section').addClass('position-top');
+    $('header').addClass('position-top');
     $('.form-section').addClass('hidden');
     $('.options').delay(1000).fadeIn(1000);
-    $('header p').fadeOut();
-    $('footer').fadeOut();
+    $('header p, .description-prompt, footer').fadeOut();
+    $('header h1').html(`<span style="font-size:.7em;">${state.ajax.near}</span><br /><span class="js-search">Search New Location</span>`);
+    $('header h1').addClass('point');
   }
 
   //Animation of selected and venue showing
@@ -200,6 +193,32 @@ $(function(){
   map.html(newMap);
   }
 
+  function renderNewSearch(form){
+    $('.new-search label').fadeIn(2000);
+    $('header h1').addClass('hidden');
+    let newForm = `
+    <div class="search-box">
+      <input type="text" name="text"  class="js-input input" />
+    </div>
+    <button type="submit" class="new-form-submit">Search</button>`
+  form.append(newForm);
+  $('.new-search').animate({
+    top:0,
+    height: '150px'
+  }, 1000);
+}
+
+function hideNewSearch(){
+$('.new-search label').fadeOut(2000);
+  $('.new-search').animate({
+    top:'-150px',
+    height: '0px'
+  }, 1000);
+  $('header h1').removeClass('hidden');
+  $('.new-form').html('');
+  alert('hello');
+}
+
   /*============ Event Functions ================= */
   $('.js-form').submit(e => {
     e.preventDefault();
@@ -243,6 +262,20 @@ $(function(){
   //Hide google map
   $('.g-map').on('click', '.close-map', function(){
     $('.g-map').fadeOut();
+  });
+
+  $('.description-prompt').hover(function(){
+    $('.description').toggleClass('hidden');
+  });
+
+  $('header h1').on('click','.js-search', function(){
+    renderNewSearch($('.new-form'));
+  });
+
+  $('.new-search .js-form').submit(e => {
+    e.preventDefault();
+    logItemsToState();
+    checkValidLocation(state, hideNewSearch);
   });
 /*================= End of Program ==================== */
 });

@@ -4,9 +4,15 @@
 }
 
 
-body, h1, h2, p, div {
+body, h1, h2, p, div, section {
   margin: 0;
   padding: 0;
+}
+
+.point:hover{
+  cursor: pointer;
+  color: #0C83E8;
+  text-shadow: none;
 }
 
 .bg{
@@ -29,8 +35,96 @@ header, .form-section {
 
 header {
   text-shadow: 0px 0px 12px rgba(125, 134, 135, 1);
-  padding: 20px 0;
+  padding: 10px 0;
 }
+
+.description-prompt {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background-color: rgba(43, 65, 88, 0.7);
+  z-index: 2;
+}
+
+.description-prompt::before {
+  content: '?';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-size: 20px;
+}
+
+.description {
+  width: 400px;
+  background-color: rgba(255, 131, 131, 0.8);
+  border-radius: 4px;
+  color: #fff;
+  padding: 10px;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  border-radius: 0 20px 0 0;
+  z-index: 1;
+  transition: .2s;
+}
+
+description-prompt:hover {
+background-color: #647586;
+}
+/* New Search */
+.new-search {
+  width: 100%;
+  position: relative;
+  z-index: 1;
+  font-size: 30px;
+  top: -150px;
+}
+
+.search-box {
+  width: 75%;
+  height: 150px;
+  position: relative;
+  display: inline-block;
+  color: #fff;
+  padding: 10px;
+}
+
+.new-search label {
+  position: absolute;
+  top:10px;
+  left: 15px;
+  color: #fff;
+  display: none;
+}
+
+.new-search input {
+  width: 100%;
+  height: 100px;
+  position: relative;
+  top: 20px;
+  font-size: 40px;
+  border: 0;
+  border-bottom: 2px solid #fff;
+  background: transparent;
+}
+
+.new-search button {
+  width: 25%;
+  height: 130px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  border-radius: 0;
+  font-size: 50px;
+  color: #fff;
+}
+
+/* ========= */
 
 footer {
   background-color: rgba(43, 65, 88, 0.7);
@@ -83,6 +177,7 @@ button {
   font-size: 16px;
   border: none;
   border-radius: 4px;
+  cursor: pointer;
 }
 
 .options {
@@ -153,7 +248,7 @@ button {
   text-align: left;
   top: 10vh;
   left: 0;
-  width: inherit;
+  width: 100%;
   background-color: #fff;
   height:68vh;
   padding: .3vw;
@@ -257,7 +352,7 @@ button {
 }
 /* Javascript Classes */
 .position-top {
-  top:0;
+  top: 0;
   transition: 1s;
 }
 
@@ -368,12 +463,13 @@ button {
   }
 
   .option-row{
-    width: 100%;
+    width: 95%;
     height: 51vw;
+    margin: 0 2.5%;
   }
 
   .option {
-    width: 49vw;
+    width: 49%;
     height: 49vw;
     margin: .3vh .3vw;
   }
@@ -404,7 +500,7 @@ button {
   }
 
   .selected-option > .option{
-    width: 98.8vw !important;
+    width: 100% !important;
     height: 79vh !important;
     transition: .2s;
   }
