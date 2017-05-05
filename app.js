@@ -200,23 +200,23 @@ $(function(){
     <div class="search-box">
       <input type="text" name="text"  class="js-input input" />
     </div>
-    <button type="submit" class="new-form-submit">Search</button>`
+    <button type="submit" class="new-form-submit"><img src="assets/search-icon.png"></button>`;
   form.append(newForm);
   $('.new-search').animate({
-    top:0,
-    height: '150px'
+    top:0
   }, 1000);
+  $('.options').css('margin-top', '-64px');
 }
 
 function hideNewSearch(){
 $('.new-search label').fadeOut(2000);
   $('.new-search').animate({
-    top:'-150px',
-    height: '0px'
+    top:'-150px'
   }, 1000);
   $('header h1').removeClass('hidden');
+
+  $('.options').css('margin-top', '-180px');
   $('.new-form').html('');
-  alert('hello');
 }
 
   /*============ Event Functions ================= */

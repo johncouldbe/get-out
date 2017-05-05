@@ -35,7 +35,7 @@ header, .form-section {
 
 header {
   text-shadow: 0px 0px 12px rgba(125, 134, 135, 1);
-  padding: 10px 0;
+  padding: 27px 0;
 }
 
 .description-prompt {
@@ -71,6 +71,7 @@ header {
   border-radius: 0 20px 0 0;
   z-index: 1;
   transition: .2s;
+  font-size: 16px;
 }
 
 description-prompt:hover {
@@ -79,6 +80,7 @@ background-color: #647586;
 /* New Search */
 .new-search {
   width: 100%;
+  height: 150px;
   position: relative;
   z-index: 1;
   font-size: 30px;
@@ -86,11 +88,10 @@ background-color: #647586;
 }
 
 .search-box {
-  width: 75%;
+  width: calc(100% - 130px);
   height: 150px;
   position: relative;
   display: inline-block;
-  color: #fff;
   padding: 10px;
 }
 
@@ -98,7 +99,7 @@ background-color: #647586;
   position: absolute;
   top:10px;
   left: 15px;
-  color: #fff;
+  color: #0C83E8;
   display: none;
 }
 
@@ -109,12 +110,13 @@ background-color: #647586;
   top: 20px;
   font-size: 40px;
   border: 0;
-  border-bottom: 2px solid #fff;
+  color: #0D50FF;
+  border-bottom: 2px solid #0C83E8;
   background: transparent;
 }
 
 .new-search button {
-  width: 25%;
+  width: 130px;
   height: 130px;
   position: absolute;
   right: 0;
@@ -122,6 +124,17 @@ background-color: #647586;
   border-radius: 0;
   font-size: 50px;
   color: #fff;
+  transition: .2s;
+}
+
+.new-search button img {
+  width: 50%;
+  height: auto;
+}
+
+.new-search button:hover {
+  background-color: #0bbf7d;
+  transition: .2s;
 }
 
 /* ========= */
@@ -182,7 +195,7 @@ button {
 
 .options {
   height: 100%;
-  margin: 0 auto;
+  margin: -180px auto 0 auto;
   position: relative;
   text-align: center;
   font-size: 0;
@@ -352,7 +365,7 @@ button {
 }
 /* Javascript Classes */
 .position-top {
-  top: 0;
+  top: -150px;
   transition: 1s;
 }
 
@@ -513,6 +526,9 @@ button {
     transition: .2s;
   }
 }
+
+
+
 /* Ipad Pro and a little New MacBook friendlying */
 @media screen and (min-height: 800px){
   .venue {
