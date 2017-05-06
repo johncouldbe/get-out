@@ -29,7 +29,7 @@ body, h1, h2, p, div, section {
 
 header, .form-section {
   position: relative;
-  top: calc(45vh - 150px);
+  top: calc(35vh - 150px);
   color: #fff;
   margin: 0 auto;
 }
@@ -133,13 +133,11 @@ background-color: #647586;
 .new-search .new-form-submit {
   right: 130px;
   background-color: #0DFFA9;
-  border-radius: 0 4px 4px 0;
 }
 
 .cancel {
   background-color: #ff8383;;
   right:0;
-  border-radius: 4px 0 0 4px;
 }
 
 .new-search .new-form-submit img, .cancel img {
@@ -355,7 +353,7 @@ button {
   left: 2%;
 }
 
-.g-map {
+.g-map, .loading {
   position: fixed;
   top: 0;
   left: 0;
@@ -377,8 +375,8 @@ button {
 
 .close-map{
   position: absolute;
-  top: 10px;
-  right:10px;
+  top: 15px;
+  right:15px;
   color: #fff;
   cursor: pointer;
 }
@@ -547,9 +545,11 @@ button {
 
   .new-search .new-form-submit {
     left: 0;
+    border-radius: 0 4px 4px 0;
   }
   .cancel {
     right: 0;
+    border-radius: 4px 0 0 4px;
   }
 
   /* ================= */

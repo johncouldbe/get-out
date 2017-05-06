@@ -114,6 +114,7 @@ $(function(){
 
     $(e).find('.venues').removeClass('hidden');
   }
+
   //Animation of De-Selected and venue hiding
   function deSelectedAnimation(e){
     //Raise opacity of surrounding options
@@ -180,6 +181,14 @@ $(function(){
       }, 2000);
   };
 
+  function resetVenues(){
+    $('.venues').each(function(){
+      $(this).html(`
+        <div class="clock">
+        </div>`);
+    });
+  }
+
   //Display google maps
   function displayMap(query, map){
     let newMap = `
@@ -200,9 +209,9 @@ $(function(){
     <div class="search-box">
       <input type="text" name="text"  class="js-input input" />
     </div>
-    <div type="submit" class="new-form-submit">
+    <button class="new-form-submit" type="image">
       <img src="assets/search-icon.svg" />
-    </div>
+    </button>
     <div class="cancel">
       <img src="assets/cancel-icon.svg" />
     </div>`;
@@ -213,17 +222,28 @@ $(function(){
   $('.options').css('margin-top', '-64px');
 }
 
-function hideNewSearch(){
-  $('.new-search').animate({
-    top:'-150px'
-  }, 1000);
-  $('header h1').removeClass('hidden');
-
-  $('.options').css('margin-top', '-150px');
-  $('.new-form').html('');
+function hideNewSearch(canceled){
+  if(canceled == 'canceled'){
+    $('.new-search').animate({
+      top:'-150px'
+    }, 1000);
+    $('header h1').removeClass('hidden');
+    $('.options').css('margin-top', '-150px');
+    $('.new-form').html('');
+    $('.loading').fadeOut();
+  } else {
+    $('.loading').fadeIn();
+    setTimeout(function(){
+      $('.new-search').animate({
+        top:'-150px'
+      }, 1000);
+      $('header h1').removeClass('hidden');
+      $('.options').css('margin-top', '-150px');
+      $('.new-form').html('');
+      $('.loading').fadeOut();
+    }, 2000);
+  }
 }
-
-
 
   /*============ Event Functions ================= */
   $('.js-form').submit(e => {
@@ -282,15 +302,13 @@ function hideNewSearch(){
     e.preventDefault();
     logItemsToState();
     checkValidLocation(state, hideNewSearch);
+    resetVenues();
   });
 
-  $('.new-search').on('click', '.new-form-submit', function(){
-    logItemsToState();
-    checkValidLocation(state, hideNewSearch);
-  });
 
-  $('.new-search').on('click','.cancel', function(){
-    hideNewSearch();
+  $('.new-search').on('click','.cancel', function(event){
+    let canceled = 'canceled';
+    hideNewSearch(canceled);
   });
 /*================= End of Program ==================== */
 });
