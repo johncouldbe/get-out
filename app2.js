@@ -6,7 +6,6 @@ $(function(){
     addresses: {},
     option: {},
     venuePhotos:[],
-    lastPick:'',
     ajax: {
       url:"https://api.foursquare.com/v2/venues/explore",
       photosURL:"",
@@ -129,11 +128,7 @@ $(function(){
     $(e).closest('.option-row, .option-container').removeClass('selected-option');
     $(e).closest('.option-row').siblings().removeClass('selected-option-row-sibling');
     //Hide venues
-    if(state.lastPick == $(e).find('.venues').attr('id')){
-    $(e).find('.venues').addClass('hidden');
-  } else {
-      $(e).addClass('hidden');
-    }
+    $(e).siblings('.venues').addClass('hidden');
   }
 
   //Displays the venues in the dropdown
@@ -260,8 +255,10 @@ function hideNewSearch(canceled){
   //When user picks an option
   $('.option').click(function(event){
     var e = event.currentTarget;
-    event.stopPropagation();
     var currentOption = $(this).find('.option-name').text();
+
+    if(state.optionSelected === false){
+      state.optionSelected = true;
       state.id = $(this).find('.venues').attr('id');
       state.ajax.query = $(this).find('.venues').attr('id').replace(/-/g, ' ');
 
@@ -269,30 +266,18 @@ function hideNewSearch(canceled){
         get4SqVenueData(state, displayVenues);
         state.option[currentOption] = true;
       }
-      /* ================= */
-    if($(this).hasClass('not-selected-option')){
-      state.optionSelected = true;
-      deSelectedAnimation($(`#${state.lastPick}`));
-      currentOption = $(this).find('.option-name').text();
-      state.id = $(this).find('.venues').attr('id');
-      state.ajax.query = $(this).find('.venues').attr('id').replace(/-/g, ' ');
-      if(state.option[currentOption].isTrue === false){
-        get4SqVenueData(state, displayVenues);
-        state.option[currentOption] = true;
-      }
-      $(this).removeClass('not-selected-option');
       selectedAnimation(e);
-    } else {
-      if(state.optionSelected === false){
-        state.optionSelected = true;
-        selectedAnimation(e);
-      } else {
-        state.optionSelected = false;
-        deSelectedAnimation(e);
-      }
     }
-    /* ================= */
-    state.lastPick = $(this).find('.venues').attr('id');
+  });
+  //When user closes an option
+  $('.option-name').click(function(event){
+    event.stopPropagation();
+    var e = event.currentTarget;
+
+    if(state.optionSelected === true){
+      state.optionSelected = false;
+      deSelectedAnimation(e);
+    }
   });
   //Display google map
   $('.venues').on('click', '.map-icon', function(e){
@@ -317,8 +302,6 @@ function hideNewSearch(canceled){
     e.preventDefault();
     logItemsToState();
     checkValidLocation(state, hideNewSearch);
-    state.optionSelected = false;
-    deSelectedAnimation($(`#${state.lastPick}`));
     resetVenues();
   });
 
@@ -327,25 +310,5 @@ function hideNewSearch(canceled){
     let canceled = 'canceled';
     hideNewSearch(canceled);
   });
-
-  $('.option').on('click','.venues', function(e){
-    e.stopPropagation();
-  });
-
-
-  $('.option').hover(function() {
-    $(this).addClass('hoveredOption');
-    $(this).find('.option-name').css('color','#ffffff');
-  }, function(){
-    $(this).removeClass('hoveredOption');
-    $(this).find('.option-name').css('color','#0C83E8');
-  });
-
-  $('.options').click(function(){
-    state.optionSelected = false;
-    deSelectedAnimation($(`#${state.lastPick}`));
-  });
-
-
 /*================= End of Program ==================== */
 });

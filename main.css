@@ -247,6 +247,10 @@ button {
   transition: .2s;
 }
 
+.hoveredOption {
+  background-color: #0bbf7d;
+}
+
 .option-left {
   left:0;
 }
