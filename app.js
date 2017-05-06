@@ -92,7 +92,7 @@ $(function(){
   //Initial animation when user enters their location search
   function initiatedDisplay(){
     $('header').addClass('position-top');
-    $('.form-section').addClass('hidden');
+    $('.form-section').html('');
     $('.options').delay(1000).fadeIn(1000);
     $('header p, .description-prompt, footer').fadeOut();
     $('header h1').html(`<span style="font-size:.7em;">${state.ajax.near}</span><br /><span class="js-search">Search New Location</span>`);
@@ -200,7 +200,12 @@ $(function(){
     <div class="search-box">
       <input type="text" name="text"  class="js-input input" />
     </div>
-    <button type="submit" class="new-form-submit"><img src="assets/search-icon.png"></button>`;
+    <div type="submit" class="new-form-submit">
+      <img src="assets/search-icon.svg" />
+    </div>
+    <div class="cancel">
+      <img src="assets/cancel-icon.svg" />
+    </div>`;
   form.append(newForm);
   $('.new-search').animate({
     top:0
@@ -209,15 +214,16 @@ $(function(){
 }
 
 function hideNewSearch(){
-$('.new-search label').fadeOut(2000);
   $('.new-search').animate({
     top:'-150px'
   }, 1000);
   $('header h1').removeClass('hidden');
 
-  $('.options').css('margin-top', '-180px');
+  $('.options').css('margin-top', '-150px');
   $('.new-form').html('');
 }
+
+
 
   /*============ Event Functions ================= */
   $('.js-form').submit(e => {
@@ -276,6 +282,15 @@ $('.new-search label').fadeOut(2000);
     e.preventDefault();
     logItemsToState();
     checkValidLocation(state, hideNewSearch);
+  });
+
+  $('.new-search').on('click', '.new-form-submit', function(){
+    logItemsToState();
+    checkValidLocation(state, hideNewSearch);
+  });
+
+  $('.new-search').on('click','.cancel', function(){
+    hideNewSearch();
   });
 /*================= End of Program ==================== */
 });

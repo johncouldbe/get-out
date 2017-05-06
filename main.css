@@ -29,8 +29,9 @@ body, h1, h2, p, div, section {
 
 header, .form-section {
   position: relative;
-  top: 45vh;
+  top: calc(45vh - 150px);
   color: #fff;
+  margin: 0 auto;
 }
 
 header {
@@ -78,6 +79,7 @@ description-prompt:hover {
 background-color: #647586;
 }
 /* New Search */
+
 .new-search {
   width: 100%;
   height: 150px;
@@ -88,7 +90,7 @@ background-color: #647586;
 }
 
 .search-box {
-  width: calc(100% - 130px);
+  width: calc(100% - 260px);
   height: 150px;
   position: relative;
   display: inline-block;
@@ -100,7 +102,6 @@ background-color: #647586;
   top:10px;
   left: 15px;
   color: #0C83E8;
-  display: none;
 }
 
 .new-search input {
@@ -115,26 +116,48 @@ background-color: #647586;
   background: transparent;
 }
 
-.new-search button {
+.new-search .new-form-submit, .cancel {
   width: 130px;
   height: 130px;
   position: absolute;
-  right: 0;
   top: 0;
   border-radius: 0;
-  font-size: 50px;
+  font-size: 16px;
   color: #fff;
   transition: .2s;
+  text-align: center;
+  cursor: pointer;
 }
 
-.new-search button img {
+
+.new-search .new-form-submit {
+  right: 130px;
+  background-color: #0DFFA9;
+  border-radius: 0 4px 4px 0;
+}
+
+.cancel {
+  background-color: #ff8383;;
+  right:0;
+  border-radius: 4px 0 0 4px;
+}
+
+.new-search .new-form-submit img, .cancel img {
   width: 50%;
   height: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
-.new-search button:hover {
+.new-search .new-form-submit:hover {
   background-color: #0bbf7d;
   transition: .2s;
+}
+
+.cancel:hover {
+  background-color: #db6969;
 }
 
 /* ========= */
@@ -195,7 +218,7 @@ button {
 
 .options {
   height: 100%;
-  margin: -180px auto 0 auto;
+  margin: -150px auto 0 auto;
   position: relative;
   text-align: center;
   font-size: 0;
@@ -474,6 +497,62 @@ button {
   body {
     background-position: center center;
   }
+
+  /* ================= */
+  .new-search {
+    width: 100%;
+    height: 150px;
+    position: relative;
+    z-index: 1;
+    font-size: 30px;
+    top: -150px;
+  }
+
+  .search-box {
+    width: calc(100%);
+    height: 75px;
+    padding: 10px;
+  }
+
+  .new-search label {
+    top:5px;
+    left: 15px;
+    color: #0C83E8;
+    display: none;
+  }
+
+  .new-search input {
+    width: 100%;
+    height: 50px;
+    top: 20px;
+    font-size: 16px;
+    text-align: center;
+  }
+
+  .new-search .new-form-submit, .cancel {
+    width: 49.4%;
+    height: 45px;
+    position: absolute;
+    top: 85px;
+    margin-left: 0;
+    margin-right: 0;
+    color: #fff;
+    line-height: 45px;
+  }
+
+  .new-search .new-form-submit img, .cancel img {
+    height: 80%;
+    width: auto;
+  }
+
+  .new-search .new-form-submit {
+    left: 0;
+  }
+  .cancel {
+    right: 0;
+  }
+
+  /* ================= */
 
   .option-row{
     width: 95%;
