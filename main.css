@@ -78,7 +78,6 @@ header {
 description-prompt:hover {
 background-color: #647586;
 }
-/* New Search */
 
 .new-search {
   width: 100%;
@@ -157,8 +156,6 @@ background-color: #647586;
 .cancel:hover {
   background-color: #db6969;
 }
-
-/* ========= */
 
 footer {
   background-color: rgba(43, 65, 88, 0.7);
@@ -499,8 +496,11 @@ button {
   body {
     background-position: center center;
   }
+header, .form-section {
+  top: 0;
+  margin: 0 15px;
+}
 
-  /* ================= */
   .new-search {
     width: 100%;
     height: 150px;
@@ -532,10 +532,10 @@ button {
   }
 
   .new-search .new-form-submit, .cancel {
-    width: 49.4%;
+    width: 46.3%;
     height: 45px;
     position: absolute;
-    top: 85px;
+    top: 90px;
     margin-left: 0;
     margin-right: 0;
     color: #fff;
@@ -548,12 +548,12 @@ button {
   }
 
   .new-search .new-form-submit {
-    left: 0;
-    border-radius: 0 4px 4px 0;
+    left: 3vw;
+    border-radius: 4px;
   }
   .cancel {
-    right: 0;
-    border-radius: 4px 0 0 4px;
+    right: 3vw;
+    border-radius: 4px;
   }
 
   /* ================= */

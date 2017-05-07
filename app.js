@@ -25,6 +25,12 @@ $(function(){
     });
   }
 
+  function getOptionInfo(e){
+    state.currentOption = $(e).find('.option-name').text();
+    state.id = $(e).find('.venues').attr('id');
+    state.ajax.query = $(e).find('.venues').attr('id').replace(/-/g, ' ');
+  }
+
   let get4SqPhoto = (state, success) => {
      let data = {
        v:20170428,
@@ -112,7 +118,6 @@ $(function(){
     $(e).closest('.option-row, .option-container').addClass('selected-option');
     $(e).parent('.option-row').siblings().addClass('selected-option-row-sibling');
     //Show venues
-
     $(e).find('.venues').removeClass('hidden');
   }
 
@@ -185,7 +190,7 @@ $(function(){
 
       }, 2000);
   };
-
+  //Clear out all venue divs to not confuse our user after new search
   function resetVenues(){
     $('.venues').each(function(){
       $(this).html(`
@@ -206,7 +211,7 @@ $(function(){
     </iframe>`;
   map.html(newMap);
   }
-
+  //Create our new Form
   function renderNewSearch(form){
     $('.new-search label').fadeIn(2000);
     $('header h1').addClass('hidden');
@@ -226,7 +231,7 @@ $(function(){
   }, 1000);
   $('.options').css('margin-top', '-64px');
 }
-
+//Hide New Form
 function hideNewSearch(canceled){
   if(canceled == 'canceled'){
     $('.new-search').animate({
@@ -251,6 +256,7 @@ function hideNewSearch(canceled){
 }
 
   /*============ Event Functions ================= */
+  //Initial Locations Submit
   $('.js-form').submit(e => {
     e.preventDefault();
     logItemsToState();
@@ -261,37 +267,39 @@ function hideNewSearch(canceled){
   $('.option').click(function(event){
     var e = event.currentTarget;
     event.stopPropagation();
-    var currentOption = $(this).find('.option-name').text();
-      state.id = $(this).find('.venues').attr('id');
-      state.ajax.query = $(this).find('.venues').attr('id').replace(/-/g, ' ');
+    state.currentOption = '';
 
-      if(state.option[currentOption].isTrue === false){
-        get4SqVenueData(state, displayVenues);
-        state.option[currentOption] = true;
-      }
-      /* ================= */
+    getOptionInfo(e);
+    //If option has been selected before don't make API call
+    if(state.option[state.currentOption].isTrue === false){
+      get4SqVenueData(state, displayVenues);
+      state.option[state.currentOption] = true;
+    }
+    //If user clicks on another option while current option is still open
     if($(this).hasClass('not-selected-option')){
       state.optionSelected = true;
       deSelectedAnimation($(`#${state.lastPick}`));
-      currentOption = $(this).find('.option-name').text();
-      state.id = $(this).find('.venues').attr('id');
-      state.ajax.query = $(this).find('.venues').attr('id').replace(/-/g, ' ');
-      if(state.option[currentOption].isTrue === false){
+      getOptionInfo(e);
+      //Check if API call is needed
+      if(state.option[state.currentOption].isTrue === false){
         get4SqVenueData(state, displayVenues);
-        state.option[currentOption] = true;
+        state.option[state.currentOption] = true;
       }
+      //Show new venues
       $(this).removeClass('not-selected-option');
       selectedAnimation(e);
-    } else {
+    }
+    //If user clicks on an option and no others are open
+    else {
       if(state.optionSelected === false){
         state.optionSelected = true;
         selectedAnimation(e);
-      } else {
+      } else { //If it's open close it
         state.optionSelected = false;
         deSelectedAnimation(e);
       }
     }
-    /* ================= */
+    //Keeps up with the last picked option
     state.lastPick = $(this).find('.venues').attr('id');
   });
   //Display google map
@@ -304,15 +312,21 @@ function hideNewSearch(canceled){
   $('.g-map').on('click', '.close-map', function(){
     $('.g-map').fadeOut();
   });
-
+  //Show/Hide Description
   $('.description-prompt').hover(function(){
     $('.description').toggleClass('hidden');
   });
 
+  //Show the New Search Bar
   $('header h1').on('click','.js-search', function(){
     renderNewSearch($('.new-form'));
   });
-
+  //Hide the New Search Bar
+  $('.new-search').on('click','.cancel', function(event){
+    let canceled = 'canceled';
+    hideNewSearch(canceled);
+  });
+  //New Search Bar Submit
   $('.new-search .js-form').submit(e => {
     e.preventDefault();
     logItemsToState();
@@ -322,17 +336,7 @@ function hideNewSearch(canceled){
     resetVenues();
   });
 
-
-  $('.new-search').on('click','.cancel', function(event){
-    let canceled = 'canceled';
-    hideNewSearch(canceled);
-  });
-
-  $('.option').on('click','.venues', function(e){
-    e.stopPropagation();
-  });
-
-
+  //Hover effect for the options
   $('.option').hover(function() {
     $(this).addClass('hoveredOption');
     $(this).find('.option-name').css('color','#ffffff');
@@ -340,12 +344,15 @@ function hideNewSearch(canceled){
     $(this).removeClass('hoveredOption');
     $(this).find('.option-name').css('color','#0C83E8');
   });
-
+  //Click anywhere outside of the box to close it
   $('.options').click(function(){
     state.optionSelected = false;
     deSelectedAnimation($(`#${state.lastPick}`));
   });
-
+  //Keeps the outside click to close box function happy
+  $('.option').on('click','.venues', function(e){
+    e.stopPropagation();
+  });
 
 /*================= End of Program ==================== */
 });
