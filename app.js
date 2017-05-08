@@ -40,7 +40,7 @@ $(function(){
      $.getJSON(state.ajax.photosURL,data ,success);
   };
 
-  let checkValidLocation = (state, success) => {
+  let get4SqVenueData = (state, success) => {
 
      $.ajax({
        method:"GET",
@@ -53,21 +53,11 @@ $(function(){
          client_secret: 'TTS0TSSO44RW0H5PAGRVMKUXJ52FNB5PCKC5VL2OBJDAYRKE'
        },
        success: success,
-       error: function(err){
+       error: function(){
          alert("Uh Oh! It appears the location you entered is invalid. Please try again.");
+         return false;
        }
      });
-  };
-
-  let get4SqVenueData = (state, success) => {
-     let data = {
-       near:state.ajax.near,
-       query:state.ajax.query,
-       v:20170428,
-       client_id:'YDX2K0BAAOAEQJ0MMPBPBP0ZPI3TAXN4OEZVBPF5KA2GAAMZ',
-       client_secret: 'TTS0TSSO44RW0H5PAGRVMKUXJ52FNB5PCKC5VL2OBJDAYRKE'
-     };
-     $.getJSON(state.ajax.url, data, success);
   };
 
   function createPhotoURLS(data){
@@ -260,7 +250,7 @@ function hideNewSearch(canceled){
   $('.js-form').submit(e => {
     e.preventDefault();
     logItemsToState();
-    checkValidLocation(state, initiatedDisplay);
+    get4SqVenueData(state, initiatedDisplay);
   });
 
   //When user picks an option
@@ -330,7 +320,7 @@ function hideNewSearch(canceled){
   $('.new-search .js-form').submit(e => {
     e.preventDefault();
     logItemsToState();
-    checkValidLocation(state, hideNewSearch);
+    get4SqVenueData(state, hideNewSearch);
     state.optionSelected = false;
     deSelectedAnimation($(`#${state.lastPick}`));
     resetVenues();
