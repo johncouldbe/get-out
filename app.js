@@ -25,6 +25,10 @@ $(function(){
     });
   }
 
+  function undoLog(oldTerm){
+    state.ajax.near = oldTerm;
+  }
+
   function getOptionInfo(e){
     state.currentOption = $(e).find('.option-name').text();
     state.id = $(e).find('.venues').attr('id');
@@ -247,7 +251,7 @@ function hideNewSearch(canceled){
 
   /*============ Event Functions ================= */
   //Initial Locations Submit
-  $('.js-form').submit(e => {
+  $('#first-form').submit(e => {
     e.preventDefault();
     logItemsToState();
     get4SqVenueData(state, initiatedDisplay);
@@ -317,10 +321,11 @@ function hideNewSearch(canceled){
     hideNewSearch(canceled);
   });
   //New Search Bar Submit
-  $('.new-search .js-form').submit(e => {
+  $('#new-form').submit(e => {
     e.preventDefault();
+    let oldTerm = state.ajax.near;
     logItemsToState();
-    get4SqVenueData(state, hideNewSearch);
+    get4SqVenueData(state, hideNewSearch) ? console.log(success) : undoLog(oldTerm);
     state.optionSelected = false;
     deSelectedAnimation($(`#${state.lastPick}`));
     resetVenues();
