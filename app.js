@@ -18,6 +18,7 @@ $(function(){
   function logItemsToState(){
     //Get the users location input
     state.ajax.near = $('.js-input').val();
+    console.log(state.option);
     /*Gets the query parameter to use later in api call and sets it to false.
     Once the option is set clicked its set to true and will not make a second api call*/
     $('.option-name').each(function(option){
@@ -207,11 +208,11 @@ $(function(){
   }
   //Create our new Form
   function renderNewSearch(form){
-    $('.new-search label').fadeIn(2000);
+    $('.new-form label').fadeIn(2000);
     $('header h1').addClass('hidden');
     let newForm = `
     <div class="search-box">
-      <input type="text" name="text"  class="js-input input" />
+      <input type="text" name="text"  class="js-input input"/>
     </div>
     <button class="new-form-submit" type="image">
       <img src="assets/search-icon.svg" />
@@ -246,6 +247,7 @@ function hideNewSearch(canceled){
       $('.new-form').html('');
       $('.loading').fadeOut();
     }, 2000);
+    $('header h1').html(`<span style="font-size:.7em;">${state.ajax.near}</span><br /><span class="js-search">Search New Location</span>`);
   }
 }
 
@@ -323,9 +325,9 @@ function hideNewSearch(canceled){
   //New Search Bar Submit
   $('#new-form').submit(e => {
     e.preventDefault();
-    let oldTerm = state.ajax.near;
+    const oldTerm = state.ajax.near;
     logItemsToState();
-    get4SqVenueData(state, hideNewSearch) ? console.log(success) : undoLog(oldTerm);
+    get4SqVenueData(state, hideNewSearch(null))
     state.optionSelected = false;
     deSelectedAnimation($(`#${state.lastPick}`));
     resetVenues();
